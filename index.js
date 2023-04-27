@@ -32,7 +32,9 @@ const connectDB = async () => {
         try{
            await Book.insertMany([
                 { brand: "Honda",
-                 model: CR-V}
+                 model: "CR-V"},
+                 { brand: "Lada",
+                 model: "Niva"}
              ])
           
              res.send('Data Add...')
