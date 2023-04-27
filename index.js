@@ -6,7 +6,9 @@ const Car = require ('./models/cars');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 mongoose.set('strictQuery', false);
+
 
 const connectDB = async () => {
 
@@ -15,10 +17,12 @@ const connectDB = async () => {
         console.log(`MongoDb Connected: ${conn.connection.host} `);
     }catch(error){
         console.log(error);
+      
         process.exit(1);
     }
+}
 
-
+ 
     app.get('/', (req, res) => {
         res.send({title: 'Cars'});
     })
@@ -48,11 +52,9 @@ const connectDB = async () => {
         }
     })
 
-
     connectDB().then(() => {
         app.listen(PORT, () => {
             console.log(`Listening on port ${PORT}`)
         })
     })
 
-}
