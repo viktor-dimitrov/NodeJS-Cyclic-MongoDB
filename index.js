@@ -6,6 +6,8 @@ const Car = require ('./models/cars');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const routes = require('./routes');
+
 
 mongoose.set('strictQuery', false);
 
@@ -24,25 +26,12 @@ const connectDB = async () => {
 
  
     app.get('/', (req, res) => {
-        res.send({title: 'Cars'});
+        res.send("Hello from DB");
     })
 
 
-    app.get('/add-note', async (req, res) => {
-        try{
-           await Book.insertMany([
-                { brand: "Honda",
-                 model: "CR-V"},
-                 { brand: "Lada",
-                 model: "Niva"}
-             ])
-          
-             res.send('Data Add...')
+    app.use(routes)
 
-        }catch(error){
-            console.log("err" + error)
-        }
-    })
 
     app.get('/cars', async(req, res) => {
         const car = await Car.find();
