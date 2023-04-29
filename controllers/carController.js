@@ -15,7 +15,7 @@ router.get('/', async(req, res) => {
 
 
 router.post('/', bodyParser,  async ( req, res) => {
-    const carData = Object.entries(req)
+    const carData = req.toString()
 
 
     // const car = await carManager.create(carData);
