@@ -30,10 +30,12 @@ const connectDB = async () => {
         res.send("Hello from DB");
     })
 
-    app.use(routes);
+    
    
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json())
+    app.use(bodyParser.json());
+
+    app.use(routes);
 
 
    
