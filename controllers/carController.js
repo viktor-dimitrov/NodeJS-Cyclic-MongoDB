@@ -14,12 +14,13 @@ router.get('/', async(req, res) => {
 
 
 router.post('/', async ( req, res) => {
-    const carData = req.payload
+    const carData = req.payload;
+    console.log(req.payload)
 
     const car = await carManager.create(carData);
    
 
-    res.json(req.payload);
+    res.json({ok:true});
 
 
 })
