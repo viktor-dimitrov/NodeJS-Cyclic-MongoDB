@@ -16,11 +16,9 @@ router.get('/', async(req, res) => {
 
 router.post('/', async ( req, res) => {
     const carData = req.body
-
-    // const car = await carManager.create(carData);
+    const car = await carManager.create(carData);
    
-
-    res.json(carData);
+    res.json(car);
 
 
 })
