@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const carManager = require('../managers/carManager');
+const bodyParser = require('body-parser').urlencoded({ extended: true })
 
 router.get('/', async(req, res) => {
 
@@ -13,8 +14,8 @@ router.get('/', async(req, res) => {
     })
 
 
-router.post('/', async ( req, res) => {
-    const carData = req.payload;
+router.post('/', bodyParser,  async ( req, res) => {
+    const carData = req.body;
    
 
     const car = await carManager.create(carData);
