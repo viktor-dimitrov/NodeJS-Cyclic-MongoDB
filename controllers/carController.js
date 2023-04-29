@@ -19,7 +19,7 @@ router.post('/', async ( req, res) => {
     const car = await carManager.create(carData);
    
 
-    res.json(JSON.stringify(req));
+    res.json(JSON.parse(req));
 
 
 })
