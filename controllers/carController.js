@@ -10,7 +10,7 @@ router.post('/post', async ( req, res) => {
 
     const car = await carManager.create(carData);
 
-    res.json({car: added});
+    res.json({car: "added"});
 
 
 })
