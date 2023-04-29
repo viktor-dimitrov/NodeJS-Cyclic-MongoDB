@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/post', async ( req, res) => {
-    const carData = req.body;
+    const carData = req
 
     const car = await carManager.create(carData);
 
