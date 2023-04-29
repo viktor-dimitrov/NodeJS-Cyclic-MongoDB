@@ -6,8 +6,12 @@ router.get('/', (req, res) => {
 })
 
 router.post('/post', async ( req, res) => {
-    const carData = req.body
-console.log(req)
+    const carData = {
+        brand:"Mazda",
+        model:"6",
+        color:"Black"
+    }
+
     const car = await carManager.create(carData);
    
 
