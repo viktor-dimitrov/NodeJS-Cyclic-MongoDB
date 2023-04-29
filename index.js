@@ -7,6 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const routes = require('./routes');
+const bodyParser = require('body-parser');
+
 
 
 mongoose.set('strictQuery', false);
@@ -29,6 +31,9 @@ const connectDB = async () => {
     })
 
     app.use(routes);
+   
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json())
 
 
    
