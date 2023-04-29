@@ -1,17 +1,20 @@
 const router = require('express').Router();
 const carManager = require('../managers/carManager');
 
-router.get('/', (req, res) => {
-    res.json({ok:true})
-})
+router.get('/', async(req, res) => {
 
-router.post('/post', async ( req, res) => {
-    const carData = {
-        brand:"Mazda",
-        model:"6",
-        color:"Black"
-    }
+        const cars = await carManager.getAll();
 
+        if(cars){
+            res.json(cars);
+        } else {
+            res.send("Somthing went wrong.")
+        }
+    })
+
+
+router.post('/', async ( req, res) => {
+    const carData = req.body
     const car = await carManager.create(carData);
    
 

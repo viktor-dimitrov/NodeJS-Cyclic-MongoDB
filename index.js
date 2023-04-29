@@ -31,15 +31,7 @@ const connectDB = async () => {
     app.use(routes);
 
 
-    // app.get('/cars', async(req, res) => {
-    //     const car = await Car.find();
-
-    //     if(car){
-    //         res.json(car);
-    //     } else {
-    //         res.send("Somthing went wrong.")
-    //     }
-    // })
+   
 
     connectDB().then(() => {
         app.listen(PORT, () => {
