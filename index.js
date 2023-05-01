@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const Car = require ('./models/cars');
+const Car = require ('./models/car');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
