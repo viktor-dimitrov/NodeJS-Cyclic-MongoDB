@@ -3,7 +3,7 @@ const authManager = require('../managers/authManager');
 
 router.post('/register', async (req, res) => {
     const {username, email,  password, repassword} = req.body;
-    const token = await authManager(username, email,  password, repassword);
+    const token = await authManager.regUser({username, email,  password, repassword});
 
 })
 
