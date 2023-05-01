@@ -2,8 +2,18 @@ const router = require('express').Router();
 const authManager = require('../managers/authManager');
 
 router.post('/register', async (req, res) => {
-    const {username, email,  password, repassword} = req.body;
-    const token = await authManager.regUser({username, email,  password, repassword});
+    const data = req.body;
+
+    try{
+        const token = await authManager.regUser(data);
+        res.cookie('auth', token);
+        res.send(token)
+    }catch(error){
+        console.log(error)
+        return res.status(400);
+
+    }
+    
 
 })
 
