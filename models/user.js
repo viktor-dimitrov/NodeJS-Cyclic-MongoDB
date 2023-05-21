@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true,'The username is required!'],
-        minLength: [2, 'The username should be at least 2 characters long!']
+        minLength: [2, 'The username should be at least 2 characters long!'],
+        maxLength: [10, 'The username should be 10 characters max long!']
 
     },
  
@@ -20,16 +21,26 @@ const userSchema = new mongoose.Schema({
 
     },
 
-    password: {
+      password: {
         type: String,
-        required: true,
-        
-    },
+        required: true
+      },
+      phone: {
+        type: String,
+        required: true
+      },
+  
+      imageUrl: {
+        type: String,
+        required: true
+      },
+      
 
     myPosts:[ {
         type: mongoose.Types.ObjectId,
         ref: 'post'
     }],
+
 
 });
 

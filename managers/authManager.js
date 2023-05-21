@@ -4,10 +4,10 @@ const jwt = require('../lib/jsonwebtoken');
 const { SECRET } = require('../lib/constants');
  
 
-exports.getUser = (username) => User.findOne({username});
+exports.getUser = (email) => User.findOne({email});
 
 exports.regUser = async (data) => {
-    const {username, email,  password, repassword} = data;
+    const {username, email,  password, repassword, phone, imageUrl} = data;
    
     const user = await this.getUser(username);
     
@@ -23,17 +23,29 @@ exports.regUser = async (data) => {
 
     try{
         const hashPass = await bcrypt.hash(password, 5);
-        const user = await User.create({username, email, password: hashPass});
+        const user = await User.create({username, email, phone, imageUrl, password: hashPass});
         
         const payload = {
             _id: user._id,
             username,
-            email
+            email,
+            phone,
+            imageUrl
         }
     
         const token = await jwt.sign(payload, SECRET);
-    
-        return token;
+
+        const userData = {
+            _id: user._id,
+            accessToken: token,
+            username,
+            email,
+            phone,
+            imageUrl
+        }
+
+        
+        return userData;
     }catch(error){
         console.log(error)
        throw new Error((error.message).split(':')[2].split(',')[0]);
@@ -45,28 +57,39 @@ exports.regUser = async (data) => {
 
 exports.logUser = async (data) => {
 
-    const {username, password} = data;
+    const {email, password} = data;
 
-    const user = await this.getUser(username);
+    const user = await this.getUser(email);
 
     if(!user){
-        throw new Error ('Invalid username or password!');
+        throw new Error ('Invalid email or password!');
     }
 
      const passIsValid =  await bcrypt.compare(password, user.password);
 
      if(!passIsValid){
-        throw new Error ('Invalid username or password!');
+        throw new Error ('Invalid email or password!');
     }
     const payload = {
         _id: user._id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        phone: user.phone,
+        imageUrl: user.imageUrl
     }
 
     const token = await jwt.sign(payload, SECRET);
 
-    return token;
+    const userData = {
+        _id: user._id,
+        accessToken: token,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        imageUrl: user.imageUrl
+    }
+
+    return userData;
 }
 
 
