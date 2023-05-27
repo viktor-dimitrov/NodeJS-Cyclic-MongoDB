@@ -42,10 +42,7 @@ const carSchema = new Schema ({
         type: Number,
         required: true
       },
-      _id: {
-        type: String,
-        required: true
-      }
+
     });
 
 

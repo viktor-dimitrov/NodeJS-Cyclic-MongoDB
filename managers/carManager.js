@@ -1,6 +1,21 @@
 const Car = require('../models/car');
 
 
-exports.create = (carData) => Car.create(carData);
 
-exports.getAll = () => Car.find();
+
+exports.getAll = async (carId) => {
+
+    let filter = {}; 
+
+    if (carId !== null) {
+      filter._id = carId; 
+    }
+
+    const cars = await Car.find(filter);
+
+    return cars
+} 
+
+
+
+exports.create = (carData) =>  Car.create(carData);

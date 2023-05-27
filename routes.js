@@ -1,10 +1,11 @@
 const router = require('express').Router();
 
 
-const userController = require('./controllers/userController');
+const authController = require('./controllers/authController');
 const carController = require('./controllers/carController');
 
-router.use('/users', userController);
-router.use('/cars', carController);
+router.use('/users', authController);
+router.use('/data/cars', carController);
+router.use('/details/:_id', carController);
 
 module.exports = router;
