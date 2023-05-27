@@ -2,9 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('./middlewares/cors');
+const { authentication } = require('./middlewares/authMiddleware');
 
 const routes = require('./routes');
 const bodyParser = require('body-parser');
+
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -38,6 +40,7 @@ const connectDB = async () => {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(cookieParser());
+    app.use(authentication);
 
     app.use(routes);
 
