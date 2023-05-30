@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const carSchema = new Schema ({
     _ownerId: {
-        type: String,
-        required: true
-      },
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+
+  },
       model: {
         type: String,
         required: true

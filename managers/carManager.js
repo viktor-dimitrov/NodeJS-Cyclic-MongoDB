@@ -3,15 +3,24 @@ const Car = require('../models/car');
 
 
 
-exports.getAll = async (carId) => {
+exports.getAll = async (filter) => {
 
-    let filter = {}; 
 
-    if (carId !== null) {
-      filter._id = carId; 
+     console.log(filter)
+    const cars = await Car.find(filter).populate('_ownerId').lean();
+
+    cars[0].dealer = {
+      _id: cars[0]['_ownerId']._id,
+      username: cars[0]['_ownerId'].username,
+      email: cars[0]['_ownerId'].email,
+      imageUrl:cars[0]['_ownerId'].imageUrl,
+      phone: cars[0]['_ownerId'].phone
+
     }
 
-    const cars = await Car.find(filter);
+    cars[0]._ownerId = null;
+
+  
 
     return cars
 } 

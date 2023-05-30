@@ -3,16 +3,33 @@ const carManager = require('../managers/carManager');
 
 
 router.get('/', async(req, res) => {
+
+    // if (req.query != {}){
+    //     console.log('-------------')
+    //     console.log(req.query)
+    // }
+
+
     const where = req.query.where;
-    let carId = null;
+    const load = req.query.load;
+    let filter = null;
+    let ownerId = null;
 
     if(where && where.includes('_id')){
-        carId = where.slice(5, 29);
-       
+        filter = {
+            _id: where.slice(5, 29),
+        }
+    }else if(where && where.includes('_ownerId')){
+        filter = {
+            _ownerId: where.slice(10, 34),
+        }
     }
 
+
     try{
-        const cars = await carManager.getAll(carId);
+        const cars = await carManager.getAll(filter);
+
+        //  console.log(cars)
     
         res.status(200).json(cars);
     }catch(error){
