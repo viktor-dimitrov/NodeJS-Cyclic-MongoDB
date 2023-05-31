@@ -3,11 +3,13 @@ const Car = require('../models/car');
 
 
 
-exports.getAll = async (filter) => {
+exports.getAll = async (filterArray) => {
 
-
-     console.log(filter)
-    const cars = await Car.find(filter).populate('_ownerId').lean();
+let expressions = null;
+  if (filterArray.length > 0) {
+    expressions = {$and: filterArray};
+  }
+    const cars = await Car.find(expressions).populate('_ownerId').lean();
 
     cars[0].dealer = {
       _id: cars[0]['_ownerId']._id,
@@ -15,12 +17,9 @@ exports.getAll = async (filter) => {
       email: cars[0]['_ownerId'].email,
       imageUrl:cars[0]['_ownerId'].imageUrl,
       phone: cars[0]['_ownerId'].phone
-
     }
 
     cars[0]._ownerId = null;
-
-  
 
     return cars
 } 
