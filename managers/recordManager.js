@@ -1,33 +1,19 @@
-const router = require('express').Router();
-const recordManager = require('../managers/recordManager');
+const Record = require('../models/record');
 
 
 
-router.get('/', async (req, res) => {
 
- 
+exports.getAll = async (filterArray) => {
 
-    try {
-        const records = await recordManager.getAll();
-        res.status(200).json(records);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-})
+let expressions = null;
+  if (filterArray.length > 0) {
+    expressions = {$and: filterArray};
+  }
+    const records = await Record.find(expressions).populate('_ownerId').lean();
 
-router.post('/', async (req, res) => {
-
-    try {
-        const recordData = { artist, title, year, style, imageUrl } = req.body;
-        const _ownerId = req.user._id;
-        const timestamp = Date.now();
-        const record = await recordManager.create({ ...recordData, _ownerId, '_createdOn': timestamp });
-        res.json(record);
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ error: error.message });
-    }
+    return records
+} 
 
 
-})
-module.exports = router;
+
+exports.create = (recordData) =>  Record.create(recordData);

@@ -35,6 +35,6 @@ const recordSchema = new Schema ({
     });
 
 
-const Car = mongoose.model('Record', recordSchema);
+const Record = mongoose.model('Record', recordSchema);
 
 module.exports = Record;

@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const recordManager = require('../managers/recordManager');
-
+const { recordFilter } = require('../lib/utils/filterFactory');
 
 
 router.get('/', async (req, res) => {
 
-
+    const filterArray = recordFilter(req.query);
 
     try {
-        const records = await recordManager.getAll();
+        const records = await recordManager.getAll(filterArray);
         res.status(200).json(records);
     } catch (error) {
         res.status(400).json({ error: error.message });
