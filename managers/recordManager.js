@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 
     try {
         const records = await recordManager.getAll(filterArray);
-        res.status(200).json(record);
+        res.status(200).json(records);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
