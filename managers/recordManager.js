@@ -5,7 +5,7 @@ const Record = require('../models/record');
 
 exports.getAll = async () => {
 
-    const records = await Record.find(expressions).populate('_ownerId').lean();
+    const records = await Record.find().populate('_ownerId').lean();
 
     return records
 } 
