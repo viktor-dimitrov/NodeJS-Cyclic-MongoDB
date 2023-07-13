@@ -9,7 +9,7 @@ exports.getUser = (email) => User.findOne({email});
 exports.regUser = async (data) => {
     const {username, email,  password, repassword, phone, imageUrl} = data;
    
-    const user = await this.getUser(username);
+    const user = await this.getUser(email);
     
     if(user){
         throw new Error ('Username is already registered!');
