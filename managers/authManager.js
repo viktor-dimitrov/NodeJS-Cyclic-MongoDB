@@ -12,7 +12,7 @@ exports.regUser = async (data) => {
     const user = await this.getUser(email);
     
     if(user){
-        throw new Error ('Username is already registered!');
+        return new Error ('Username is already registered!');
     }
     if( password != repassword){
         throw new Error('The repeat password should be equal to the password!');
