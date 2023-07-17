@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
       res.send(JSON.stringify(user));
     }catch(error){
         // console.log(JSON.parse(error))
-        return res.send(JSON.parse(error)); 
+        return res.send(JSON.stringify(error)); 
     }
     
 } )
