@@ -27,8 +27,8 @@ router.post('/login', async (req, res) => {
       res.cookie('auth', user);
       res.send(JSON.stringify(user));
     }catch(error){
-        console.log(JSON.parse(error))
-        return res.send(error.error); 
+        // console.log(JSON.parse(error))
+        return res.send(JSON.parse(error)); 
     }
     
 } )
