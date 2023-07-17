@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
         res.send(JSON.stringify(user));
     }catch(error){
         console.log(error)
-        return res.status(400);
+        res.status(400).json({ error: error.message })
     }
     
 
@@ -27,8 +27,8 @@ router.post('/login', async (req, res) => {
       res.cookie('auth', user);
       res.send(JSON.stringify(user));
     }catch(error){
-        console.log(JSON.parse(error))
-        return res.send(error); 
+        console.log(error)
+        res.status(400).json({ error: error.message })
     }
     
 } )
