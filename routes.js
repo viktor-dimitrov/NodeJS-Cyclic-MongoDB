@@ -11,5 +11,6 @@ router.use('/data/cars', carController);
 router.use('/details/:_id', carController);
 
 router.use('/data/records', recordController);
+router.use('/data/post', recordController);
 
 module.exports = router;

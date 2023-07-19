@@ -30,9 +30,10 @@ const connectDB = async () => {
         process.exit(1);
     }
 }
+ 
 
     app.get('/', (req, res) => {
-        res.send("Hello from DB");
+        res.send("<h1>Server is OK. MongoDb is Connected.</h1>");
     })
 
     
