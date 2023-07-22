@@ -30,7 +30,8 @@ exports.regUser = async (data) => {
             username,
             email,
             phone,
-            imageUrl
+            imageUrl,
+            myPosts:[]
         }
     
         const token = await jwt.sign(payload, SECRET);
@@ -41,7 +42,8 @@ exports.regUser = async (data) => {
             username,
             email,
             phone,
-            imageUrl
+            imageUrl,
+            myPosts:[]
         }
 
         
@@ -75,7 +77,8 @@ exports.logUser = async (data) => {
         username: user.username,
         email: user.email,
         phone: user.phone,
-        imageUrl: user.imageUrl
+        imageUrl: user.imageUrl,
+        myPosts: user.myPosts
     }
 
     const token = await jwt.sign(payload, SECRET);
@@ -86,7 +89,8 @@ exports.logUser = async (data) => {
         username: user.username,
         email: user.email,
         phone: user.phone,
-        imageUrl: user.imageUrl
+        imageUrl: user.imageUrl,
+        myPosts: user.myPosts
     }
 
     return userData;
