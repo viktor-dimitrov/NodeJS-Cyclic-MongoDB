@@ -7,11 +7,20 @@ const User = require('../models/user');
 exports.getAll = async () => {
 
     const records = await Record.find().populate('_ownerId').lean();
-
     return records
 } 
 
-// exports.create = (recordData) =>  Record.create(recordData);
+
+exports.getOne = async (recordId) => {
+    try{
+        console.log(recordId)
+        const record =  await Record.findById(recordId)
+        return record
+    }catch(error){
+        console.log(error)
+        throw new Error((error.message));
+    }
+}
 
 exports.create = async (data) => {
     try{
@@ -21,6 +30,6 @@ exports.create = async (data) => {
         
     }catch(error){
         console.log(error)
-        throw new Error((error.message).split(':')[2].split(',')[0]);
+        throw new Error((error.message));
     }
 }

@@ -4,15 +4,23 @@ const recordManager = require('../managers/recordManager');
 
 
 router.get('/', async (req, res) => {
-
-
-
+   
     try {
         const records = await recordManager.getAll();
         res.status(200).json(records);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
+})
+
+router.get('/:_id', async (req, res) => {
+    console.log('dsad')
+    try {
+        const record = await recordManager.getOne(req.params._id);
+        res.status(200).json(record);
+    }catch(error){
+        res.status(400).json({ error: error.message });
+      }
 })
 
 router.post('/', async (req, res) => {
@@ -27,7 +35,6 @@ router.post('/', async (req, res) => {
         console.error(error);
         res.status(400).json({ error: error.message });
     }
-
 
 })
 module.exports = router;
