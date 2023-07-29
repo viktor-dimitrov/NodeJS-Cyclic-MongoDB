@@ -1,38 +1,33 @@
 const jwt = require('../lib/jsonwebtoken');
 const { SECRET } = require('../lib/constants');
 
-exports.authentication = async (req, res, next) => {
+exports.authentication = async (req, res, next) => { 
     const token = req.headers['x-authorization'];
     if(token) {
         try {
             const decodedToken = await jwt.verify(token, SECRET);
             req.user = decodedToken;
-            // res.locals.isAuth = true;
-            // res.locals.user = decodedToken;
-
-
         }catch(error) {
-             res.clearCookie('auth');
-             res.end();
+            res.status(400).json({ error: error.message });
         }
     }
     next();
 }
 
 
-// exports.isAuth = (req, res, next) => {
-//     if(!req.user){
-//         return res.redirect('/login');
-//     }
+exports.isAuth = (req, res, next) => {
+    if(!req.user){
+        res.status(400)
+    }
 
-//     next();
-// }
+    next();
+}
  
-// exports.isAuthor = (req, res, next) => {
+exports.isOwner = (req, res, next) => {
 
-//     if(req.user._id != (req.params._author)){
-      
-//         return res.redirect('home/404');
-//     }
-//     next();
-// }
+    if(req.user._id != (req.params._ownerId)){
+    
+        res.status(400)
+    }
+    next();
+}

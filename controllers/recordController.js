@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const recordManager = require('../managers/recordManager');
-
+const authMiddleware = require('../middlewares/authMiddleware');
 
 
 router.get('/', async (req, res) => {
@@ -23,7 +23,7 @@ router.get('/:_id', async (req, res) => {
       }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware.isAuth, async (req, res) => {
     try {
         const recordData = { artist, title, year, style, imageUrl } = req.body;
         const _ownerId = req.user._id;
@@ -37,16 +37,21 @@ router.post('/', async (req, res) => {
 
 })
 
-router.delete('/:_id/delete',async (req, res) => {
+router.delete('/:_id/delete/:_ownerId' , authMiddleware.isAuth, authMiddleware.isOwner, async (req, res) => {
 
-    const recordId = req.params._id
-    try{
+    const recordId = req.params._id;
+    if(req.user) {
+        try{
             const deletedRecord = await recordManager.deleteRecord(recordId);
-            res.status(200).json(deletedRecord)
-    }catch(error){
+            res.status(200).json(deletedRecord);
+    }catch(error){ 
         console.log(error);
         res.status(400).json({ error: error.message });
     }
+    }else{
+        res.status(409).json({error: "Unauthorized"})
+    }
+
 })
 
 
