@@ -14,9 +14,9 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:_id', async (req, res) => {
-    console.log('dsad')
+    const recordId = req.params._id;
     try {
-        const record = await recordManager.getOne(req.params._id);
+        const record = await recordManager.getOne(recordId);
         res.status(200).json(record);
     }catch(error){
         res.status(400).json({ error: error.message });
@@ -24,12 +24,11 @@ router.get('/:_id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-
     try {
         const recordData = { artist, title, year, style, imageUrl } = req.body;
         const _ownerId = req.user._id;
         const timestamp = Date.now();
-        const record = await recordManager.create({ ...recordData, _ownerId, '_createdOn': timestamp });
+        const record = await recordManager.createRecord({ ...recordData, _ownerId, '_createdOn': timestamp });
         res.json(record);
     } catch (error) {
         console.error(error);
@@ -37,4 +36,23 @@ router.post('/', async (req, res) => {
     }
 
 })
+
+router.delete('/:_id/delete',async (req, res) => {
+
+    const recordId = req.params._id
+    try{
+            const deletedRecord = await recordManager.deleteRecord(recordId);
+            res.status(200).json(deletedRecord)
+    }catch(error){
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+})
+
+
+
+
+
+
+
 module.exports = router;
