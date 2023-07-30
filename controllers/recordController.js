@@ -69,6 +69,39 @@ router.delete('/:_id/delete/:_userId' , authMiddleware.isAuth, authMiddleware.is
 })
 
 
+router.post('/:_id/edit/:_userId' , authMiddleware.isAuth, authMiddleware.isOwner, async (req, res) => {
+
+    const recordData = { artist, title, year, style, imageUrl } = req.body;
+    const timestamp = Date.now();
+    const recordId = req.params._id;
+    const userId = req.user._id;
+    let ownerId = null;
+
+    if(recordId){
+        try{
+           const record = await recordManager.getOne(recordId);
+           ownerId = record._ownerId._id.toString();
+        }catch(error){
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    if(userId === ownerId) {
+        try{
+            const editedRecord = await recordManager.editRecord(recordId, {...recordData, '_updatedOn': timestamp});
+            res.status(200).json(editedRecord);
+    }catch(error){ 
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+    }else{
+        res.status(401).json({error: "Unauthorized"});
+    }
+
+})
+
+
 
 
 

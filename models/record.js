@@ -31,6 +31,10 @@ const recordSchema = new Schema ({
         type: Number,
         required: true
       },
+      _updatedOn: {
+        type: Number,
+        required: false
+      }
 
     });
 

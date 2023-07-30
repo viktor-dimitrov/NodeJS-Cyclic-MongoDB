@@ -35,8 +35,6 @@ exports.createRecord = async (data) => {
 
 
 exports.deleteRecord = async (recordId) => {
-
-    
         try{
            return await Record.findByIdAndDelete(recordId);
           
@@ -44,6 +42,15 @@ exports.deleteRecord = async (recordId) => {
             console.log(error);
             throw new Error((error.message));
         }
+}
 
+exports.editRecord = async (recordId, data) => {
+    try{
+       return await Record.findByIdAndUpdate(recordId, data, {runValidators: true})
+      
+    }catch(error){
+        console.log(error);
+        throw new Error((error.message));
+    }
 }
 
