@@ -37,10 +37,24 @@ router.post('/', authMiddleware.isAuth, async (req, res) => {
 
 })
 
-router.delete('/:_id/delete/:_ownerId' , authMiddleware.isAuth, authMiddleware.isOwner, async (req, res) => {
+router.delete('/:_id/delete/:_userId' , authMiddleware.isAuth, authMiddleware.isOwner, async (req, res) => {
 
     const recordId = req.params._id;
-    if(req.user) {
+    const userId = req.user._id;
+    let ownerId = null;
+
+    if(recordId){
+        try{
+           const record = await recordManager.getOne(recordId);
+           ownerId = record._ownerId._id.toString();
+        }catch(error){
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    if(userId === ownerId) {
+       
         try{
             const deletedRecord = await recordManager.deleteRecord(recordId);
             res.status(200).json(deletedRecord);
@@ -49,7 +63,7 @@ router.delete('/:_id/delete/:_ownerId' , authMiddleware.isAuth, authMiddleware.i
         res.status(400).json({ error: error.message });
     }
     }else{
-        res.status(409).json({error: "Unauthorized"})
+        res.status(409).json({error: "Unauthorized"});
     }
 
 })

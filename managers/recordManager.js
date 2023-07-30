@@ -13,7 +13,6 @@ exports.getAll = async () => {
 
 exports.getOne = async (recordId) => {
     try{
-        console.log(recordId)
         const record =  await Record.findById(recordId).populate('_ownerId').lean()
         return record
     }catch(error){
