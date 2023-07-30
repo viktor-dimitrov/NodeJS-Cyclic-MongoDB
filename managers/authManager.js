@@ -6,6 +6,38 @@ const { SECRET } = require('../lib/constants');
 
 exports.getUser = (email) => User.findOne({email});
 
+exports.getUserData = async (userId) => {
+
+    try{
+        const user =   await User.findById(userId).lean();
+        const payload = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            imageUrl: user.imageUrl,
+            myPosts: user.myPosts
+        }
+    
+        const token = await jwt.sign(payload, SECRET);
+
+        const userData = {
+            _id: user._id,
+            accessToken: token,
+           username: user.username,
+            email: user.email,
+            phone: user.phone,
+            imageUrl: user.imageUrl,
+            myPosts: user.myPosts
+        }
+
+        return userData;
+    }catch(error){
+        console.log(error)
+        throw new Error((error.message));
+    }
+}
+
 exports.regUser = async (data) => {
     const {username, email,  password, repassword, phone, imageUrl} = data;
    

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const authManager = require('../managers/authManager');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/register', async (req, res) => {
     const data = req.body;
@@ -32,6 +33,17 @@ router.post('/login', async (req, res) => {
     }
     
 } )
+
+router.get('/me', authMiddleware.isAuth, async (req, res) => {
+    try{
+        const userData = await authManager.getUserData(req.user._id);
+        res.send(JSON.stringify(userData));
+
+    }catch(error){
+        console.log(error)
+        throw new Error((error.message));
+    }
+})
 
 
 

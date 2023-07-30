@@ -27,6 +27,7 @@ const recordSchema = new Schema ({
         type: String,
         required: true
       },
+      
       _createdOn: {
         type: Number,
         required: true
