@@ -34,14 +34,16 @@ exports.createRecord = async (data) => {
 }
 
 
-exports.deleteRecord = async (recordId) => {
-        try{
-           return await Record.findByIdAndDelete(recordId);
-          
-        }catch(error){
-            console.log(error);
-            throw new Error((error.message));
-        }
+exports.deleteRecord = async (recordId, userId) => {
+    try {
+        const deletedRecord = await Record.findByIdAndDelete(recordId);
+        await User.findByIdAndUpdate(userId, { $pull: { myPosts: recordId } })
+        return deletedRecord
+
+    } catch (error) {
+        console.log(error);
+        throw new Error((error.message));
+    }
 }
 
 exports.editRecord = async (recordId, data) => {

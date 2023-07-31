@@ -56,7 +56,7 @@ router.delete('/:_id/delete/:_userId' , authMiddleware.isAuth, authMiddleware.is
     if(userId === ownerId) {
        
         try{
-            const deletedRecord = await recordManager.deleteRecord(recordId);
+            const deletedRecord = await recordManager.deleteRecord(recordId, userId);
             res.status(200).json(deletedRecord);
     }catch(error){ 
         console.log(error);
