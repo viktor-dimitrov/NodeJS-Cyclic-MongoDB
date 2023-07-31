@@ -40,6 +40,6 @@ const recordSchema = new Schema ({
     });
 
 
-const Record = mongoose.model('Record', recordSchema);
+const Record = mongoose.model('record', recordSchema);
 
 module.exports = Record;

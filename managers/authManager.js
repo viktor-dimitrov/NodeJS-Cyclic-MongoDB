@@ -9,7 +9,7 @@ exports.getUser = (email) => User.findOne({email});
 exports.getUserData = async (userId) => {
 
     try{
-        const user =   await User.findById(userId).lean();
+        const user =   await User.findById(userId).populate('myPosts').lean();
         const payload = {
             _id: user._id,
             username: user.username,
