@@ -1,10 +1,13 @@
+
+require('dotenv').config();
+const SECRET = process.env.MONGO_URI;
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('../lib/jsonwebtoken');
-const { SECRET } = require('../lib/constants');
+
  
 
-exports.getUser = (email) => User.findOne({email});
+exports.getUser = (email) => User.findOne({email}).populate('myPosts').lean();;
 
 exports.getUserData = async (userId) => {
 
@@ -13,12 +16,12 @@ exports.getUserData = async (userId) => {
         const payload = {
             _id: user._id,
             username: user.username,
-            email: user.email,
+            email: user.email, 
             phone: user.phone,
             imageUrl: user.imageUrl,
             myPosts: user.myPosts
         }
-    
+     
         const token = await jwt.sign(payload, SECRET);
 
         const userData = {
@@ -93,7 +96,7 @@ exports.logUser = async (data) => {
 
     const {email, password} = data;
 
-    const user = await this.getUser(email);
+    const user = await this.getUser(email).populate('myPosts').lean();;
 
     if(!user){
         throw new Error ('Invalid email or password!');

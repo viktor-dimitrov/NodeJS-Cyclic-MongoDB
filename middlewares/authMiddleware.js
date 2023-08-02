@@ -1,6 +1,7 @@
-const jwt = require('../lib/jsonwebtoken');
-const { SECRET } = require('../lib/constants');
 
+require('dotenv').config();
+const SECRET = process.env.MONGO_URI;
+const jwt = require('../lib/jsonwebtoken');
 exports.authentication = async (req, res, next) => { 
     const token = req.headers['x-authorization'];
     if(token) {
