@@ -12,7 +12,7 @@ exports.getAllById = async (recordId) => {
 
 exports.getOne = async (commentId) => {
     try{
-        const comment =  await Record.findById(commentId).populate('_ownerId', '-password').lean()
+        const comment =  await Comment.findById(commentId).populate('_ownerId', '-password').lean();
         return comment
     }catch(error){
         console.log(error)
@@ -22,8 +22,8 @@ exports.getOne = async (commentId) => {
 
 exports.createComment = async (data) => {
     try{
-        const comment = await Comment.create(data);
-
+        const newComment = await Comment.create(data);
+        const comment = await this.getOne(newComment._id);
         return comment
         
     }catch(error){
