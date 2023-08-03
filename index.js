@@ -13,9 +13,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 
-
-
-
 mongoose.set('strictQuery', false);
 
 
@@ -45,8 +42,6 @@ const connectDB = async () => {
 
     app.use(routes);
 
-
-   
 
     connectDB().then(() => {
         app.listen(PORT, () => {
