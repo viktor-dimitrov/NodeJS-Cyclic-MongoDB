@@ -7,9 +7,8 @@ const commentSchema = new Schema({
         ref: 'user',
         required: true
     },
-    _recordId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'record',
+    recordId: {
+        type: String,
         required: true
     },
     text: {

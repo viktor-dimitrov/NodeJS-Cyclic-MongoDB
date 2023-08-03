@@ -1,12 +1,11 @@
 const Comment = require('../models/comment');
-const User = require('../models/user');
 
 
 
+exports.getAllById = async (recordId) => {
 
-exports.getAll = async () => {
-
-    const comments = await Comment.find().populate('_ownerId', '-password').lean();
+    console.log(recordId)
+    const comments = await Comment.find({recordId: recordId}).populate('_ownerId', '-password').lean();
     return comments
 } 
 
@@ -21,7 +20,7 @@ exports.getOne = async (commentId) => {
     }
 }
 
-exports.createRecord = async (data) => {
+exports.createComment = async (data) => {
     try{
         const comment = await Comment.create(data);
 
