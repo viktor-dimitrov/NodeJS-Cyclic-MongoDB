@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
         const user = await authManager.regUser(data);
       
         res.cookie('auth', user);
-        res.send(JSON.stringify(user));
+        res.json(user);
     }catch(error){
         console.log(error)
         res.status(400).json({ error: error.message })
