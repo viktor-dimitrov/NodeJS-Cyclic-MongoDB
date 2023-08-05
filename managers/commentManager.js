@@ -4,7 +4,6 @@ const Comment = require('../models/comment');
 
 exports.getAllById = async (recordId) => {
 
-    console.log(recordId)
     const comments = await Comment.find({recordId: recordId}).populate('_ownerId', '-password').lean();
     return comments
 } 
@@ -33,7 +32,7 @@ exports.createComment = async (data) => {
 }
 
 
-exports.deleteComment = async (commentId, userId) => {
+exports.deleteComment = async (commentId) => {
     try {
         const deletedComment = await Comment.findByIdAndDelete(commentId);
       
