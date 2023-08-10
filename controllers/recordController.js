@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/:_id', async (req, res) => {
     const recordId = req.params._id;
     try {
-        const record = await recordManager.getOne(recordId);
+        const record = await recordManager.getOne(recordId); 
         res.status(200).json(record);
     }catch(error){
         res.status(400).json({ error: error.message });

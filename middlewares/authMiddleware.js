@@ -9,7 +9,7 @@ exports.authentication = async (req, res, next) => {
             const decodedToken = await jwt.verify(token, SECRET);
             req.user = decodedToken;
         }catch(error) {
-            res.status(401).json({ error: error.message });
+           return res.status(401).json({ error: error.message });
         }
     }
     next();
