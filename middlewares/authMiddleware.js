@@ -21,16 +21,20 @@ exports.isAuth = (req, res, next) => {
     if(!req.user){
         res.status(401).json({ error: "Unauthorizeddd" });
         return
+    } else {
+        next(); 
     }
 
-    next();
-}
+   
+} 
  
 exports.isOwner = (req, res, next) => {
 
     if(!req.user || !req.params._userId || req.user._id !== req.params._userId){
         res.status(400).json({error: 'You are not author of this record!!!'});
         return
+    } else {
+        next();
     }
-    next();
+    
 }

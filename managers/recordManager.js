@@ -6,8 +6,15 @@ const User = require('../models/user');
 
 exports.getAll = async () => {
 
-    const records = await Record.find().populate('_ownerId', '-password').lean();
-    return records
+    try{
+        const records = await Record.find().populate('_ownerId', '-password').lean();
+        return records
+    }catch(error){
+        console.log(error);
+        throw new Error((error.message));
+    }
+
+
 } 
 
 
